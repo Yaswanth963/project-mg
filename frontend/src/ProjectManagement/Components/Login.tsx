@@ -1,0 +1,102 @@
+import React from 'react';
+import { Button, Form, Input, Typography } from 'antd';
+import styled from '@emotion/styled';
+import { Link, useNavigate } from 'react-router-dom';
+import { useHttpClient } from '../hooks/useHttpClient';
+import planetImage from '../assets/images/planet.jpeg'
+
+
+type FieldType = {
+    username?: string;
+    password?: string;
+};
+
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: hidden; 
+`;
+
+const Login: React.FC = () => {
+    const navigate = useNavigate();
+    const { login } = useHttpClient();
+
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+        const req = {
+            username: values.username,
+            password: values.password
+        }
+        login(req)
+            .then(res => {
+                const token = res?.data?.token;
+                const role = res?.data.role;
+                localStorage.setItem("token", token);
+                localStorage.setItem("userId", req?.username);
+                localStorage.setItem("userRole", role);
+                navigate("/");
+            })
+            .catch(res => {
+                alert('Incorrect username or password');
+            })
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    return (
+        <div style={{
+            height: '100vh', display: 'flex', flexDirection: 'column',
+            backgroundImage: `url(${planetImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '100%',
+        }}>
+            <StyledDiv>
+                <div style={{ border: '1px solid grey', padding: 40, borderRadius: 8, color: 'white' }}>
+                    <Typography.Title type='secondary' style={{ fontSize: 30, textAlign: 'center', marginBottom: 30, color: 'white' }}>Login</Typography.Title>
+                    <Form
+                        name="basic"
+                        labelCol={{ span: 8 }}
+                        wrapperCol={{ span: 16 }}
+                        style={{ maxWidth: 600 }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                    >
+                        <Form.Item<FieldType>
+                            label={<span style={{ color: '#FFFFFF' }}>Username</span>}
+                            name="username"
+                            rules={[{ required: true, message: 'Please input your username!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item<FieldType>
+                            label={<span style={{ color: '#FFFFFF' }}>Password</span>}
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            <Button htmlType="submit" ghost>
+                                Submit
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                    <Typography.Text style={{ color: 'white' }}>not registered yet?&nbsp;&nbsp;
+                        <Link to="/signup" style={{ color: '#FFFFFF' }}><u>Signup</u></Link>
+                    </Typography.Text>
+                </div>
+            </StyledDiv>
+        </div>
+    )
+};
+
+export default Login;
