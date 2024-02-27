@@ -6,7 +6,6 @@ import { Project } from '../utils';
 import '../styles/styles.css'
 import { useHttpClient } from '../hooks/useHttpClient';
 import { useState } from 'react';
-import { Comments } from './Comments';
 
 interface ProjectProps {
     project?: Project
@@ -94,7 +93,6 @@ export const ProjectView = ({ project }: ProjectProps) => {
                     </Badge>
                 </div>
             </div >
-            {showComments && <Comments />}
         </>
     );
 };
