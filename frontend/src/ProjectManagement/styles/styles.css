@@ -16,11 +16,15 @@
 }
 
 .row-style{
-  background-color: rgb(66,68,83);
-  border-radius: 3px;
-  color: #FFFFFF;
+  background-color: rgb(29,29,31);
+  color: rgb(224,224,224);
 }
 
 .row-style:hover{
-  color: black;
+  color: rgb(119,122,131);
+}
+
+.ant-table-thead .ant-table-cell {
+  background-color: rgb(29,29,31) !important;
+  color: rgb(224,224,224) !important;
 }

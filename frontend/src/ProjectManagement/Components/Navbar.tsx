@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { ReactComponent as ProjectIcon } from '../assets/svgs/project-logo.svg';
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../Context/authContext";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -38,14 +40,14 @@ const LoginButton = styled.div`
 
 export const NavBar = () => {
     const navigate = useNavigate();
+    const role = localStorage.getItem("userRole");
     return (
         <StyledDiv>
             <ProjectIcon style={{ padding: '10px 30px', cursor: 'pointer' }} onClick={() => { navigate("/") }} />
             <LinksContainer>
                 <LinkItem to="/home">Home</LinkItem>
-                <LinkItem to="/explore">Explore</LinkItem>
+                <LinkItem to={role == 'REVIEWER' ? "/reviewer" : "user"}>Explore</LinkItem>
                 <LinkItem to="/about">About us</LinkItem>
-                <LinkItem to="/contact">Contact</LinkItem>
                 <LoginButton onClick={() => { navigate("/login") }}>Login</LoginButton>
             </LinksContainer>
         </StyledDiv>

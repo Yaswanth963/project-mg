@@ -56,6 +56,21 @@ const Signup: React.FC = () => {
             backgroundPosition: 'center',
             width: '100%',
         }}>
+            {/* Logo Svg Start */}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                onClick={() => { navigate("/") }}
+                style={{ position: 'relative', top: 40, left: 40, cursor: 'pointer' }}
+            >
+                <g clip-path="url(#clip0_3_9)">
+                    <path d="M9 15V23H1V15H9ZM23 15V23H15V15H23ZM9 1V9H1V1H9ZM23 1V9H15V1H23Z" stroke="#FFFFFF" stroke-width="2" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_3_9">
+                        <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+            {/* Logo Svg Start */}
             <StyledDiv>
                 {!loading && <div style={{ border: '1px solid grey', padding: 40, borderRadius: 8 }}>
                     <Typography.Title type='secondary' style={{ fontSize: 30, textAlign: 'center', marginBottom: 30, color: 'white' }}>Signup</Typography.Title>

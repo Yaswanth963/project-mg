@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Table, Tag } from 'antd';
+import { Modal, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { Project, ProjectStatus } from '../utils';
 import moment from 'moment';
@@ -8,14 +8,20 @@ import { ReviewerActions } from './ReviewerActions';
 import { useHttpClient } from '../hooks/useHttpClient';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';
+import '../styles/styles.css'
 
 const StyledTable = styled.div`
+    background-color: rgb(8,9,12);
+    height: 100vh;
+`
+const ContentWrapper = styled.div`
+    padding: 40px; 
 `
 
 const Reviewer: React.FC = () => {
     const [reload, setReload] = useState(false);
     const [view, setView] = useState(false);
-    const [projects, setProjects] = useState();
+    const [projects, setProjects] = useState<Project[]>([]);
     const [activeProject, setActiveProject] = useState<Project>();
     const { fetchProjects, acceptProject, rejectProject } = useHttpClient();
 
@@ -55,7 +61,7 @@ const Reviewer: React.FC = () => {
             title: 'Project Name',
             dataIndex: 'projectName',
             key: 'projectName',
-            ellipsis: true
+            ellipsis: true,
         },
         {
             title: 'Submitted By',
@@ -67,18 +73,8 @@ const Reviewer: React.FC = () => {
             title: 'Date Of Submission',
             dataIndex: 'dateOfSubmission',
             key: 'dateOfSubmission',
-            render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+            render: (date: Date) => moment(date).format('DD MMM YYYY'),
             ellipsis: true
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status: ProjectStatus) => (
-                <Tag color={status === ProjectStatus.PENDING ? 'orange' : status === ProjectStatus.APPROVED ? 'green' : 'red'}>
-                    {status}
-                </Tag>
-            ),
         },
         {
             title: 'Action',
@@ -98,7 +94,10 @@ const Reviewer: React.FC = () => {
     useEffect(() => {
         fetchProjects()
             .then(res => {
-                const projects = res?.data;
+                let projects: Project[] = res?.data;
+                projects = projects.filter((project, _) => {
+                    return project.status === ProjectStatus.PENDING;
+                })
                 setProjects(projects);
             })
             .catch(err => {
@@ -110,8 +109,15 @@ const Reviewer: React.FC = () => {
 
     return (
         <StyledTable>
-            <UserNavbar />
-            <Table columns={columns} dataSource={projects} pagination={false} style={{ border: '0.5px solid grey' }} />
+            <ContentWrapper>
+                <UserNavbar />
+                <Table columns={columns}
+                    dataSource={projects}
+                    pagination={false}
+                    style={{ paddingTop: '40px' }}
+                    rowClassName='row-style'
+                />
+            </ContentWrapper>
             <Modal
                 title="click x to close the project"
                 open={view}

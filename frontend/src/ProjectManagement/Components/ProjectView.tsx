@@ -2,7 +2,7 @@ import { Avatar, Badge, Image, Typography } from 'antd';
 import { ReactComponent as Like } from '../assets/svgs/like.svg'
 import { ReactComponent as Comment } from '../assets/svgs/comment.svg'
 import { Project } from '../utils';
-
+import { Comments } from './Comments';
 import '../styles/styles.css'
 import { useHttpClient } from '../hooks/useHttpClient';
 import { useState } from 'react';
@@ -93,6 +93,7 @@ export const ProjectView = ({ project }: ProjectProps) => {
                     </Badge>
                 </div>
             </div >
+            {showComments && <Comments />}
         </>
     );
 };

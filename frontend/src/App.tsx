@@ -11,16 +11,14 @@ import { About } from './ProjectManagement/Components/About';
 import { Contact } from './ProjectManagement/Components/Contact';
 
 function App() {
-  const userRole = localStorage.getItem("userRole");
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/explore" element={
-            userRole === 'USER' ? <User /> : <Reviewer />
-          } />
+          <Route path="/user" element={<User />} />
+          <Route path="/reviewer" element={<Reviewer />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

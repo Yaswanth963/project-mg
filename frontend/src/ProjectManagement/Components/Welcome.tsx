@@ -20,7 +20,7 @@ const styles = {
 export const Welcome = () => {
     return (
         <>
-            <div style={{ backgroundColor: 'rgb(37,34,50)', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ backgroundColor: 'rgb(29,29,31)', height: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <NavBar />
                 <StyledDiv>
                     <div>

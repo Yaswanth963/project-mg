@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Modal, Table, Tag } from 'antd';
+import { Modal, Table } from 'antd';
 import type { TableProps } from 'antd';
 import { Project, ProjectStatus } from '../utils';
 import moment from 'moment';
@@ -10,12 +10,16 @@ import { ProjectView } from './ProjectView';
 import { AuthContext } from '../Context/authContext';
 import { UserNavbar } from './UserNavbar';
 import '../styles/styles.css'
+const capitalize = require('capitalize');
 
 const StyledTable = styled.div`
-    background-color: rgb(48,45,61);
+    background-color: rgb(8,9,12);
     height: 100vh;
 `
 
+const ContentWrapper = styled.div`
+    padding: 40px; 
+`
 const Reviewer: React.FC = () => {
     const [reload, setReload] = useState(false);
     const [view, setView] = useState(false);
@@ -40,7 +44,6 @@ const Reviewer: React.FC = () => {
         setActiveProject(project);
     }
 
-
     const columns: TableProps<Project>['columns'] = [
         {
             title: 'Project Name',
@@ -52,7 +55,7 @@ const Reviewer: React.FC = () => {
             title: 'Date Of Submission',
             dataIndex: 'dateOfSubmission',
             key: 'dateOfSubmission',
-            render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+            render: (date: Date) => moment(date).format('DD MMM YYYY'),
             ellipsis: true
         },
         {
@@ -60,9 +63,21 @@ const Reviewer: React.FC = () => {
             dataIndex: 'status',
             key: 'status',
             render: (status: ProjectStatus) => (
-                <Tag color={status === ProjectStatus.PENDING ? 'orange' : status === ProjectStatus.APPROVED ? 'green' : 'red'}>
-                    {status}
-                </Tag>
+                <span
+                    style={{
+                        backgroundColor:
+                            status === ProjectStatus.PENDING ? 'rgb(231,111,58)' :
+                                status === ProjectStatus.APPROVED ? 'rgb(59,104,233)' :
+                                    '#D62828'
+                        , borderRadius: '8px',
+                        color: '#FFFFFF',
+                        padding: '4px 8px',
+                        width: '75px',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    {capitalize(status)}
+                </span >
             ),
         },
         {
@@ -94,13 +109,15 @@ const Reviewer: React.FC = () => {
 
     return (
         <StyledTable>
-            <UserNavbar />
+            <ContentWrapper>
+                <UserNavbar />
             <Table columns={columns}
                 dataSource={projects}
                 pagination={false}
-                style={{ padding: '40px' }}
+                style={{ paddingTop: '40px' }}
                 rowClassName='row-style'
-            />
+                />
+            </ContentWrapper>
             <Modal
                 title="click x to close the project"
                 open={view}
