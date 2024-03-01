@@ -4,20 +4,37 @@ import { ReactComponent as Comment } from '../assets/svgs/comment.svg'
 import { DataProps, Project } from '../utils';
 import { Comments } from './Comments';
 import '../styles/styles.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { useHttpClient } from '../hooks/useHttpClient';
 
 interface ProjectProps {
+    projectId?: number,
     project?: Project,
     like: boolean,
-    comments: DataProps[] | [],
     likeHandler: () => void
     commentHandler: (data: DataProps[]) => void
 }
 
+const CommentsContainer = styled.div`
+    overflow-y: auto;
+`
 
-export const ProjectView = ({ project, likeHandler, like, comments, commentHandler }: ProjectProps) => {
+export const ProjectView = ({ projectId, project, likeHandler, like, commentHandler }: ProjectProps) => {
 
     const [showComments, setShowComments] = useState(false);
+    const [tempProject, setTempProject] = useState<Project>();
+    const { fetchProjectById } = useHttpClient();
+
+    useEffect(() => {
+        fetchProjectById(projectId)
+            .then(res => {
+                setTempProject(res?.data);
+            })
+            .catch(err => {
+                console.log("Error fetching project");
+            })
+    }, [projectId])
 
     const handleLike = () => {
         likeHandler();
@@ -69,10 +86,10 @@ export const ProjectView = ({ project, likeHandler, like, comments, commentHandl
             }}>
                 <div style={{ padding: '30px 0px' }}>
                     <Typography.Title style={{ color: '#FFFFFF' }}>
-                        {project?.projectName}
+                        {tempProject?.projectName}
                     </Typography.Title>
                     <Typography.Paragraph style={{ color: 'rgb(183,183,184)', maxWidth: '600px' }}>
-                        {project?.projectDescription}
+                        {tempProject?.projectDescription}
                     </Typography.Paragraph>
                 </div>
                 <div style={{ padding: '20px' }}>
@@ -85,7 +102,7 @@ export const ProjectView = ({ project, likeHandler, like, comments, commentHandl
                     Would like to hear in your words. Comment below...
                 </Typography.Paragraph >
                 <div style={{ width: '120px', display: 'flex', justifyContent: 'space-between', margin: '20px' }}>
-                    <Badge count={like ? project?.likes : (project?.likes || 0) + 1} color='#0080F0'>
+                    <Badge count={!like ? tempProject?.likes : (tempProject?.likes || 0) + 1} color='#0080F0'>
                         <Avatar shape="square" size="large" icon={<Like />} onClick={handleLike} />
                     </Badge>
                     <Badge count={99} overflowCount={10} color='#0080F0'>
@@ -93,7 +110,9 @@ export const ProjectView = ({ project, likeHandler, like, comments, commentHandl
                     </Badge>
                 </div>
             </div>
-            {showComments && <Comments commentHandler={commentHandler} comments={comments} projectId={project?.projectId} />}
+            <CommentsContainer>
+                {showComments && <Comments commentHandler={commentHandler} projectId={tempProject?.projectId} />}
+            </CommentsContainer>
         </div >
     );
 };

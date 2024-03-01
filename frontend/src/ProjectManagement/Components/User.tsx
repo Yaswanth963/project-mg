@@ -26,9 +26,8 @@ const Reviewer: React.FC = () => {
     const [view, setView] = useState(false);
     const [projects, setprojects] = useState<Project[] | []>();
     const [activeProject, setActiveProject] = useState<Project>();
-    const { fetchProjectsByUserId, deleteProject } = useHttpClient();
     const { userData } = useContext(AuthContext);
-    const { likeProject, commentProject } = useHttpClient();
+    const { fetchProjects, likeProject, commentProject, fetchProjectsByUserId, deleteProject } = useHttpClient();
 
     const deleteHandler = (projectId: number | undefined) => {
         deleteProject(projectId)
@@ -47,11 +46,19 @@ const Reviewer: React.FC = () => {
     }
 
     const commentHandler = (comment: DataProps[]) => {
-
+        if (comment.length == 0 || Object.keys(comment[0]).length === 0)
+            return;
+        commentProject(activeProject?.projectId, comment)
+            .then(res => {
+                console.log('Commented Successfully');
+            })
+            .catch(err => {
+                console.log('Commented Failed');
+            })
     }
 
     const likeHandler = () => {
-
+        setLike(!like)
     }
 
     const columns: TableProps<Project>['columns'] = [
@@ -101,18 +108,6 @@ const Reviewer: React.FC = () => {
     ];
 
 
-    useEffect(() => {
-        const userId = userData.userId;
-        fetchProjectsByUserId(userId)
-            .then(res => {
-                const projects = res?.data;
-                setprojects(projects);
-            })
-            .catch(err => {
-                console.log('Error Fetching Projects');
-            })
-    }, [reload])
-
     const handleCancel = () => {
         if (like) {
             likeProject(activeProject?.projectId)
@@ -125,6 +120,19 @@ const Reviewer: React.FC = () => {
         }
         setView(false);
     }
+
+    useEffect(() => {
+        const userId = userData.userId;
+        fetchProjectsByUserId(userId)
+            .then(res => {
+                const projects = res?.data;
+                setprojects(projects);
+            })
+            .catch(err => {
+                console.log('Error Fetching Projects');
+            })
+    }, [reload])
+
 
     return (
         <StyledTable>
@@ -146,10 +154,9 @@ const Reviewer: React.FC = () => {
                 style={{ maxHeight: '80vh', color: '#FFFFFF' }}
             >
                 <ProjectView
-                    project={activeProject}
+                    projectId={activeProject?.projectId}
                     commentHandler={(comment: DataProps[]) => commentHandler(comment)}
                     like={like}
-                    comments={activeProject?.comments || []}
                     likeHandler={likeHandler} />
             </Modal>
         </StyledTable>

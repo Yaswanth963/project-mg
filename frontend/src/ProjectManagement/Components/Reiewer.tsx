@@ -24,7 +24,7 @@ const Reviewer: React.FC = () => {
     const [view, setView] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
     const [activeProject, setActiveProject] = useState<Project>();
-    const { fetchProjects, acceptProject, rejectProject, likeProject } = useHttpClient();
+    const { fetchProjects, likeProject, commentProject, acceptProject, rejectProject } = useHttpClient();
 
     const acceptHandler = (projectId: number | undefined) => {
         acceptProject(projectId)
@@ -42,6 +42,15 @@ const Reviewer: React.FC = () => {
     }
 
     const commentHandler = (comment: DataProps[]) => {
+        if (comment.length == 0 || Object.keys(comment[0]).length === 0)
+            return;
+        commentProject(activeProject?.projectId, comment)
+            .then(res => {
+                console.log('Commented Successfully');
+            })
+            .catch(err => {
+                console.log('Commented Failed');
+            })
     }
 
     const rejectHandler = (projectId: number | undefined) => {
@@ -143,11 +152,11 @@ const Reviewer: React.FC = () => {
                 width={800}
                 style={{ maxHeight: '80vh' }}
             >
-                <ProjectView project={activeProject}
+                <ProjectView
+                    projectId={activeProject?.projectId}
                     commentHandler={commentHandler}
                     like={like}
                     likeHandler={likeHandler}
-                    comments={activeProject?.comments || []}
                 />
             </Modal>
         </StyledTable>

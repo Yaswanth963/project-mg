@@ -25,7 +25,6 @@ const Login: React.FC = () => {
     const { login } = useHttpClient();
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         const req = {
             username: values.username,
             password: values.password
@@ -50,7 +49,7 @@ const Login: React.FC = () => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        console.log('Failed to login:', errorInfo);
     };
 
     return (

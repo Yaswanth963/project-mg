@@ -36,3 +36,7 @@
 .ant-modal-content{
   padding: 0 !important;
 }
+
+.replyIcon{
+  visibility: hidden;
+}

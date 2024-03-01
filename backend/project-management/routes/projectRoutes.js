@@ -96,16 +96,17 @@ router.patch('/project/:projectId', verifyToken, async (req, res) => {
 });
 
 // PATCH route to update project likes
-router.patch('/project/:projectId', verifyToken, async (req, res) => {
+router.patch("/project/like/:projectId", verifyToken, async (req, res) => {
   try {
     const { projectId } = req.params;
-    // Update the status of the project
-    const updatedProject = await projectService.updateLikes(projectId, status);
+    const updatedProject = await projectService.updateLikes(projectId);
 
-    return res.status(200).json({ message: 'Liked updated successfully', project: updatedProject });
+    return res
+      .status(200)
+      .json({ message: "Liked updated successfully", project: updatedProject });
   } catch (error) {
-    console.error('Error liking project:', error);
-    return res.status(500).json({ error: 'Error liking project' });
+    console.error("Error liking project:", error);
+    return res.status(500).json({ error: "Error liking project" });
   }
 });
 

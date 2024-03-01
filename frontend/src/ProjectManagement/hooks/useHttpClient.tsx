@@ -65,7 +65,7 @@ export const useHttpClient = () => {
             return httpClient.patch(`${BASE_URLS.EXPRESS_URL}/user/${rollNo}`, req, headers)
         },
         likeProject: (projectId: number | undefined) => {
-            return httpClient.patch(`${BASE_URLS.EXPRESS_URL}/project/${projectId}`, null, headers)
+            return httpClient.patch(`${BASE_URLS.EXPRESS_URL}/project/like/${projectId}`, null, headers)
         },
         commentProject: (projectId: number | undefined, comment: DataProps[] | []) => {
             return httpClient.put(`${BASE_URLS.EXPRESS_URL}/project/comment/${projectId}`, comment, headers)

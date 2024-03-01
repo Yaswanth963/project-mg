@@ -8,7 +8,7 @@ import { AuthContext } from '../Context/authContext';
 import moment from 'moment';
 
 const StyledDiv = styled.div`
-    margin: 10px;
+    margin: 20px;
 `;
 
 export const FileUpload: React.FC = () => {
@@ -89,46 +89,49 @@ export const FileUpload: React.FC = () => {
 
     const validateProjectDescription = (value: string) => {
         const words = value.trim().split(/\s+/);
-        return words.length >= 20;
+        return words.length >= 10;
     };
 
     return (
-        <div style={{ margin: '20px' }}>
+        <div style={{ padding: '30px', borderRadius: '8px' }} className='inner'>
             <StyledDiv>
-                <Typography style={{ fontWeight: 'bold', marginBottom: '10px' }}>
+                <Typography style={{ fontWeight: 'bold', marginBottom: '10px', color: '#FFFFFF' }}>
                     Project File
                 </Typography>
                 <Input
                     type="file"
                     accept=".mp4, .jpeg, .png, .jpg, .mov, .avi"
                     onChange={handleFileChange}
+                    style={{ backgroundColor: 'transparent', color: 'white' }}
                 />
             </StyledDiv>
             <StyledDiv>
-                <Typography style={{ fontWeight: 'bold', marginBottom: '10px' }}>
+                <Typography style={{ fontWeight: 'bold', marginBottom: '10px', color: '#FFFFFF' }}>
                     Project Name
                 </Typography>
                 <Input
                     type="text"
                     value={projectName}
                     disabled
+                    style={{ color: '#FFFFFF' }}
                 />
             </StyledDiv>
             <StyledDiv>
-                <Typography style={{ fontWeight: 'bold', marginBottom: '10px' }}>
+                <Typography style={{ fontWeight: 'bold', marginBottom: '10px', color: '#FFFFFF' }}>
                     Project Description
                 </Typography>
                 <TextArea
-                    placeholder="Project Description (minimum 20 words)"
+                    placeholder="Project Description (minimum 10 words)"
                     value={projectDescription}
                     onChange={(e) => setProjectDescription(e.target.value)}
                     rows={8}
                     required
+                    style={{ backgroundColor: 'transparent', color: 'white' }}
                 />
             </StyledDiv>
             <Button onClick={handleUpload}
                 disabled={!selectedFile || !projectName || !validateProjectDescription(projectDescription) || uploading}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: '20px', color: '#FFFFFF' }}
                 type='primary'
             >
                 {uploading ? 'Uploading...' : 'Upload'}

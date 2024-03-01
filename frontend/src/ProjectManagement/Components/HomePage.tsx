@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
                 setProjects(projects);
             })
             .catch(err => {
-
+                console.log('Error fetching projects');
             })
     }, [])
 
@@ -134,7 +134,7 @@ const HomePage: React.FC = () => {
                                         <Typography style={{ marginRight: '10px', color: 'white' }}>
                                             <Image src={likeImage} width={30} height={30} preview={false} />
                                             &nbsp;&nbsp;
-                                            {project.likes}
+                                            {!like ? project?.likes : (project?.likes || 0) + 1}
                                         </Typography>
                                         <Typography style={{ color: 'white' }}>
                                             <Image src={commentImage} width={30} height={30} preview={false} />
@@ -154,14 +154,15 @@ const HomePage: React.FC = () => {
                 open={view}
                 onCancel={handleCancel}
                 footer={false}
-                width={1000}
+                width="80%"
                 style={{ maxHeight: '80vh' }}
             >
-                <ProjectView project={activeProject}
+                <ProjectView
+                    projectId={activeProject?.projectId}
+                    project={activeProject}
                     commentHandler={commentHandler}
                     like={like}
                     likeHandler={likeHandler}
-                    comments={activeProject?.comments || []}
                 />
             </Modal>
         </StyledTable>

@@ -4,24 +4,16 @@ import Image from '../assets/images/project-2.png'
 import { BASE_URLS, DataProps, Project } from "../utils"
 import { AuthContext } from "../Context/authContext"
 import { useContext, useEffect, useState } from "react"
-import styled from "@emotion/styled"
 import { useHttpClient } from "../hooks/useHttpClient"
 import { useRef } from 'react';
 
 
 interface commentDataProps {
     projectId?: number
-    comments: any,
     commentHandler: (data: DataProps[]) => void,
 }
 
-
-const CommentsContainer = styled.div`
-    height: 100%;
-    overflow-y: auto;
-`
-
-export const Comments = ({ projectId, comments, commentHandler }: commentDataProps) => {
+export const Comments = ({ projectId }: commentDataProps) => {
     const loginLink = `${BASE_URLS.EXPRESS_URL}/login`
     const signupLink = `${BASE_URLS.EXPRESS_URL}/signup`
     const { userData } = useContext(AuthContext);
@@ -60,7 +52,27 @@ export const Comments = ({ projectId, comments, commentHandler }: commentDataPro
 
 
     return (
-        < CommentSection
+        <CommentSection
+            titleStyle={{
+                color: "white"
+            }}
+            overlayStyle={{
+                color: "white",
+                maxHeight: "400px",
+            }}
+            removeEmoji={true}
+            replyInputStyle={{
+                color: "white",
+            }}
+            cancelBtnStyle={{
+                padding: "10px 10px"
+            }}
+            submitBtnStyle={{
+                padding: "10px 10px"
+            }}
+            replyTop={false}
+            customImg={Image}
+
         currentUser={{
             currentUserFullName: userData.username,
             currentUserId: userData.userId,
@@ -107,7 +119,6 @@ export const Comments = ({ projectId, comments, commentHandler }: commentDataPro
                     }
                 }
             }}
-
     />
     )
 }

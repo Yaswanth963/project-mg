@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import { ReactComponent as ProjectIcon } from '../assets/svgs/project-logo.svg';
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../Context/authContext";
 
 const StyledDiv = styled.div`
     display: flex;
