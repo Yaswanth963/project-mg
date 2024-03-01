@@ -9,6 +9,7 @@ import { useHttpClient } from '../hooks/useHttpClient';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';
 import '../styles/styles.css'
+import { useNavigate } from 'react-router-dom';
 
 const StyledTable = styled.div`
     background-color: rgb(8,9,12);
@@ -24,6 +25,7 @@ const Reviewer: React.FC = () => {
     const [view, setView] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
     const [activeProject, setActiveProject] = useState<Project>();
+    const navigate = useNavigate();
     const { fetchProjects, likeProject, commentProject, acceptProject, rejectProject } = useHttpClient();
 
     const acceptHandler = (projectId: number | undefined) => {
@@ -118,6 +120,10 @@ const Reviewer: React.FC = () => {
     ];
 
     useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            navigate("/login");
+            return;
+        }
         fetchProjects()
             .then(res => {
                 let projects: Project[] = res?.data;

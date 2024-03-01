@@ -8,6 +8,7 @@ import { DataProps, Project } from '../utils';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 const { Meta } = Card;
 
 const StyledTable = styled.div`
@@ -25,6 +26,7 @@ const HomePage: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>();
     const [activeProject, setActiveProject] = useState<Project>();
     const { fetchProjects, likeProject, commentProject } = useHttpClient();
+    const navigate = useNavigate();
 
     const handleCancel = () => {
         if (like) {
@@ -61,6 +63,10 @@ const HomePage: React.FC = () => {
     }
 
     useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            navigate("/login");
+            return;
+        }
         fetchProjects()
             .then(res => {
                 const projects = res?.data;

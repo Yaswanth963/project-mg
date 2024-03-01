@@ -10,6 +10,7 @@ import { ProjectView } from './ProjectView';
 import { AuthContext } from '../Context/authContext';
 import { UserNavbar } from './UserNavbar';
 import '../styles/styles.css'
+import { useNavigate } from 'react-router-dom';
 const capitalize = require('capitalize');
 
 const StyledTable = styled.div`
@@ -27,7 +28,8 @@ const Reviewer: React.FC = () => {
     const [projects, setprojects] = useState<Project[] | []>();
     const [activeProject, setActiveProject] = useState<Project>();
     const { userData } = useContext(AuthContext);
-    const { fetchProjects, likeProject, commentProject, fetchProjectsByUserId, deleteProject } = useHttpClient();
+    const navigate = useNavigate();
+    const { likeProject, commentProject, fetchProjectsByUserId, deleteProject } = useHttpClient();
 
     const deleteHandler = (projectId: number | undefined) => {
         deleteProject(projectId)
@@ -122,6 +124,10 @@ const Reviewer: React.FC = () => {
     }
 
     useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            navigate("/login");
+            return;
+        }
         const userId = userData.userId;
         fetchProjectsByUserId(userId)
             .then(res => {
