@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Project } from '../utils'
+import { Project } from '../../utils'
 
 const StyledDiv = styled.div`
     display:flex;

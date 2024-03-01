@@ -24,9 +24,11 @@ async function login({ username, password }) {
   if (!passwordMatch) {
     throw new Error('Username or password is incorrect');
   }
-  return [user.role, jwt.sign({ userId: user.rollNo }, process.env.JWT_SECRET_KEY, {
-    expiresIn: '1h',
-  })];
+  const token = jwt.sign({ userId: user.rollNo }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "1h",
+  });
+  const metaData = { role: user.role, username: user.name };
+  return [metaData, token];
 }
 
 async function getUserByEmail(userEmail) {

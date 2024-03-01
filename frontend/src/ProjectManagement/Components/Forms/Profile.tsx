@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import styled from '@emotion/styled';
-import { User } from '../utils';
-import { useHttpClient } from '../hooks/useHttpClient';
+import { User } from '../../utils';
+import { useHttpClient } from '../../hooks/useHttpClient';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../Context/authContext';
-import earthImage from '../assets/images/earth3.jpeg'
+import { AuthContext } from '../../Context/authContext';
+import earthImage from '../../assets/images/earth3.jpeg'
 
 const StyledDiv = styled.div`
   display: flex;

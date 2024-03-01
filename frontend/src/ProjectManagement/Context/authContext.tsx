@@ -36,10 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // Simulate an asynchronous check for authentication
         const checkAuthStatus = () => {
             const userId = localStorage.getItem('userId');
-            if (userId) {
+            const username = localStorage.getItem('username');
+            if (userId && username) {
                 setIsAuthenticated(true);
                 setAuthLoading(false);
-                setUserData({ username: '@Yaswanth Perumalla', userId: userId });
+                setUserData({ username: username, userId: userId });
             }
         };
 

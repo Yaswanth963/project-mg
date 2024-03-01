@@ -3,9 +3,9 @@ import { Button, Form, Input, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropagateLoader } from 'react-spinners';
-import { UserRole } from '../utils';
-import { useHttpClient } from '../hooks/useHttpClient';
-import blackHole from '../assets/images/moon.jpeg'
+import { UserRole } from '../../utils';
+import { useHttpClient } from '../../hooks/useHttpClient';
+import blackHole from '../../assets/images/moon.jpeg'
 
 type FieldType = {
     name?: string;

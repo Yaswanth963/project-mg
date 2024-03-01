@@ -4,7 +4,7 @@ import type { TableProps } from 'antd';
 import { DataProps, Project, ProjectStatus } from '../utils';
 import moment from 'moment';
 import styled from '@emotion/styled';
-import { ReviewerActions } from './ReviewerActions';
+import { ReviewerActions } from './Actions/ReviewerActions';
 import { useHttpClient } from '../hooks/useHttpClient';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';

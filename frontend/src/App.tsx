@@ -1,14 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Signup from './ProjectManagement/Components/Signup';
+import Signup from './ProjectManagement/Components/Forms/Signup';
 import HomePage from './ProjectManagement/Components/HomePage';
-import Login from './ProjectManagement/Components/Login';
+import Login from './ProjectManagement/Components/Forms/Login';
 import User from './ProjectManagement/Components/User';
 import Reviewer from './ProjectManagement/Components/Reiewer';
-import Profile from './ProjectManagement/Components/Profile';
+import Profile from './ProjectManagement/Components/Forms/Profile';
 import { AuthProvider } from './ProjectManagement/Context/authContext';
 import { Welcome } from './ProjectManagement/Components/Welcome';
 import { About } from './ProjectManagement/Components/About';
-import { Contact } from './ProjectManagement/Components/Contact';
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
           <Route path="/reviewer" element={<Reviewer />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/*" element={<>Error Page</>} />

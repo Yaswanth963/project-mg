@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
-import { useHttpClient } from '../hooks/useHttpClient';
-import planetImage from '../assets/images/planet.jpeg'
+import { useHttpClient } from '../../hooks/useHttpClient';
+import planetImage from '../../assets/images/planet.jpeg'
 
 
 type FieldType = {
@@ -35,7 +35,8 @@ const Login: React.FC = () => {
                 const role = res?.data.role;
                 localStorage.setItem("token", token);
                 localStorage.setItem("userId", req?.username);
-                localStorage.setItem("userRole", role);
+                localStorage.setItem("userRole", role?.role);
+                localStorage.setItem("username", role?.username);
                 if (role == 'USER') {
                     navigate("/user")
                 }

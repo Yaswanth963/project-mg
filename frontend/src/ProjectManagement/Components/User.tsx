@@ -4,7 +4,7 @@ import type { TableProps } from 'antd';
 import { DataProps, Project, ProjectStatus } from '../utils';
 import moment from 'moment';
 import styled from '@emotion/styled';
-import { UserActions } from './UserActions';
+import { UserActions } from './Actions/UserActions';
 import { useHttpClient } from '../hooks/useHttpClient';
 import { ProjectView } from './ProjectView';
 import { AuthContext } from '../Context/authContext';
