@@ -38,7 +38,7 @@ const Project = sequelize.define("Projects", {
     defaultValue: 0,
   },
   comments: {
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.ARRAY(DataTypes.JSONB),
     defaultValue: [],
   },
   // Define userId as a foreign key

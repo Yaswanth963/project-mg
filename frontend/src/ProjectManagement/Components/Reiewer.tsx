@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Table } from 'antd';
 import type { TableProps } from 'antd';
-import { Project, ProjectStatus } from '../utils';
+import { DataProps, Project, ProjectStatus } from '../utils';
 import moment from 'moment';
 import styled from '@emotion/styled';
 import { ReviewerActions } from './ReviewerActions';
@@ -20,10 +20,11 @@ const ContentWrapper = styled.div`
 
 const Reviewer: React.FC = () => {
     const [reload, setReload] = useState(false);
+    const [like, setLike] = useState(false);
     const [view, setView] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
     const [activeProject, setActiveProject] = useState<Project>();
-    const { fetchProjects, acceptProject, rejectProject } = useHttpClient();
+    const { fetchProjects, acceptProject, rejectProject, likeProject } = useHttpClient();
 
     const acceptHandler = (projectId: number | undefined) => {
         acceptProject(projectId)
@@ -34,6 +35,13 @@ const Reviewer: React.FC = () => {
             .catch(err => {
                 console.log('Failed to accept the project', projectId);
             })
+    }
+
+    const likeHandler = () => {
+        setLike(!like)
+    }
+
+    const commentHandler = (comment: DataProps[]) => {
     }
 
     const rejectHandler = (projectId: number | undefined) => {
@@ -48,6 +56,15 @@ const Reviewer: React.FC = () => {
     }
 
     const handleCancel = () => {
+        if (like) {
+            likeProject(activeProject?.projectId)
+                .then(res => {
+                    console.log('Liked the project');
+                })
+                .catch(err => {
+                    console.log('Liked the project');
+                })
+        }
         setView(false);
     }
 
@@ -119,14 +136,19 @@ const Reviewer: React.FC = () => {
                 />
             </ContentWrapper>
             <Modal
-                title="click x to close the project"
+                title=""
                 open={view}
                 onCancel={handleCancel}
                 footer={false}
                 width={800}
                 style={{ maxHeight: '80vh' }}
             >
-                <ProjectView project={activeProject} />
+                <ProjectView project={activeProject}
+                    commentHandler={commentHandler}
+                    like={like}
+                    likeHandler={likeHandler}
+                    comments={activeProject?.comments || []}
+                />
             </Modal>
         </StyledTable>
     )

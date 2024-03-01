@@ -1,32 +1,26 @@
 import { Avatar, Badge, Image, Typography } from 'antd';
 import { ReactComponent as Like } from '../assets/svgs/like.svg'
 import { ReactComponent as Comment } from '../assets/svgs/comment.svg'
-import { Project } from '../utils';
+import { DataProps, Project } from '../utils';
 import { Comments } from './Comments';
 import '../styles/styles.css'
-import { useHttpClient } from '../hooks/useHttpClient';
 import { useState } from 'react';
 
 interface ProjectProps {
-    project?: Project
+    project?: Project,
+    like: boolean,
+    comments: DataProps[] | [],
+    likeHandler: () => void
+    commentHandler: (data: DataProps[]) => void
 }
 
 
-export const ProjectView = ({ project }: ProjectProps) => {
+export const ProjectView = ({ project, likeHandler, like, comments, commentHandler }: ProjectProps) => {
 
-    const [likes, setLikes] = useState<number | undefined>();
     const [showComments, setShowComments] = useState(false);
-    const { likeProject } = useHttpClient();
 
     const handleLike = () => {
-        likeProject(project?.projectId)
-            .then(res => {
-                console.log('Liked the project');
-
-            })
-            .catch(err => {
-                console.log('Liked the project');
-            })
+        likeHandler();
     }
 
     const getFileExtension = (filename: string | undefined) => {
@@ -60,41 +54,47 @@ export const ProjectView = ({ project }: ProjectProps) => {
     };
 
     return (
-        <>
-            <div className='inner' style={{
+        <div className='inner'
+            style={{
                 borderRadius: '8px',
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: '100%'
+            }}>
+            <div style={{
+                width: '90%', borderRadius: '5px solid white', display: 'flex', flexDirection: 'column',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
             }}>
                 <div style={{ padding: '30px 0px' }}>
-                    <Typography.Title>
+                    <Typography.Title style={{ color: '#FFFFFF' }}>
                         {project?.projectName}
                     </Typography.Title>
-                    <Typography.Paragraph style={{ color: 'grey', maxWidth: '600px' }}>
+                    <Typography.Paragraph style={{ color: 'rgb(183,183,184)', maxWidth: '600px' }}>
                         {project?.projectDescription}
                     </Typography.Paragraph>
                 </div>
                 <div style={{ padding: '20px' }}>
                     {renderMedia()}
                 </div>
-                <Typography.Title>
+                <Typography.Title style={{ color: '#FFFFFF', fontSize: '23px' }}>
                     Hope you like my project
                 </Typography.Title>
-                <Typography.Paragraph>
+                <Typography.Paragraph style={{ color: '#FFFFFF' }}>
                     Would like to hear in your words. Comment below...
-                </Typography.Paragraph>
+                </Typography.Paragraph >
                 <div style={{ width: '120px', display: 'flex', justifyContent: 'space-between', margin: '20px' }}>
-                    <Badge count={project?.likes} color='#0080F0'>
+                    <Badge count={like ? project?.likes : (project?.likes || 0) + 1} color='#0080F0'>
                         <Avatar shape="square" size="large" icon={<Like />} onClick={handleLike} />
                     </Badge>
                     <Badge count={99} overflowCount={10} color='#0080F0'>
                         <Avatar shape="square" size="large" icon={<Comment onClick={() => setShowComments(!showComments)} />} />
                     </Badge>
                 </div>
-            </div >
-            {showComments && <Comments />}
-        </>
+            </div>
+            {showComments && <Comments commentHandler={commentHandler} comments={comments} projectId={project?.projectId} />}
+        </div >
     );
 };
 

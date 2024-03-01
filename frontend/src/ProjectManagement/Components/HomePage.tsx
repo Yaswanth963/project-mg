@@ -1,10 +1,10 @@
 import projectImage from '../assets/images/project.png'
-import like from '../assets/svgs/like.svg'
-import comment from '../assets/svgs/comment.svg'
+import likeImage from '../assets/svgs/like.svg'
+import commentImage from '../assets/svgs/comment.svg'
 import { Row, Col, Card, Typography, Modal, Image } from 'antd';
 import { useHttpClient } from '../hooks/useHttpClient';
 import { useEffect, useState } from 'react';
-import { Project } from '../utils';
+import { DataProps, Project } from '../utils';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';
 import styled from '@emotion/styled';
@@ -21,12 +21,38 @@ const ContentWrapper = styled.div`
 
 const HomePage: React.FC = () => {
     const [view, setView] = useState(false);
+    const [like, setLike] = useState(false);
     const [projects, setProjects] = useState<Project[]>();
     const [activeProject, setActiveProject] = useState<Project>();
-    const { fetchProjects } = useHttpClient();
+    const { fetchProjects, likeProject, commentProject } = useHttpClient();
 
     const handleCancel = () => {
+        if (like) {
+            likeProject(activeProject?.projectId)
+                .then(res => {
+                    console.log('Liked the project');
+                })
+                .catch(err => {
+                    console.log('Liked the project');
+                })
+        }
         setView(false);
+    }
+
+    const likeHandler = () => {
+        setLike(!like)
+    }
+
+    const commentHandler = (comment: DataProps[]) => {
+        if (comment.length == 0 || Object.keys(comment[0]).length === 0)
+            return;
+        commentProject(activeProject?.projectId, comment)
+            .then(res => {
+                console.log('Commented Successfully');
+            })
+            .catch(err => {
+                console.log('Commented Failed');
+            })
     }
 
     const handleActiveProject = (project: Project) => {
@@ -52,7 +78,7 @@ const HomePage: React.FC = () => {
                 <div style={{ overflowX: 'hidden', paddingTop: '40px' }}>
                 <Row gutter={[16, 16]}>
                     {projects?.map((project: Project, index) => (
-                        <Col span={6} xs={20} sm={12} md={8} lg={5} xl={6} onClick={() => setActiveProject(project)}>
+                        <Col span={6} xs={20} sm={12} md={8} lg={5} xl={6} onClick={() => setActiveProject(project)} key={index}>
                             <Card
                                 hoverable
                                 title={<span style={{ color: 'white', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.projectName}</span>}
@@ -106,12 +132,12 @@ const HomePage: React.FC = () => {
                                     <Image src={projectImage} width={35} height={35} preview={false} style={{ borderRadius: '20px' }} />
                                     <div style={{ display: 'flex' }}>
                                         <Typography style={{ marginRight: '10px', color: 'white' }}>
-                                            <Image src={like} width={30} height={30} preview={false} />
+                                            <Image src={likeImage} width={30} height={30} preview={false} />
                                             &nbsp;&nbsp;
                                             {project.likes}
                                         </Typography>
                                         <Typography style={{ color: 'white' }}>
-                                            <Image src={comment} width={30} height={30} preview={false} />
+                                            <Image src={commentImage} width={30} height={30} preview={false} />
                                             &nbsp;&nbsp;
                                             {project.comments?.length}
                                         </Typography>
@@ -124,14 +150,19 @@ const HomePage: React.FC = () => {
             </div>
             </ContentWrapper>
             <Modal
-                title="click x to close the project"
+                title=""
                 open={view}
                 onCancel={handleCancel}
                 footer={false}
                 width={1000}
                 style={{ maxHeight: '80vh' }}
             >
-                <ProjectView project={activeProject} />
+                <ProjectView project={activeProject}
+                    commentHandler={commentHandler}
+                    like={like}
+                    likeHandler={likeHandler}
+                    comments={activeProject?.comments || []}
+                />
             </Modal>
         </StyledTable>
     )

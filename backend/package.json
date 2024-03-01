@@ -2,7 +2,7 @@
   "name": "project-management-backend",
   "version": "1.0.0",
   "description": "Project Management Backend",
-  "main": "app.js",
+  "main": "project-management/app.js",
   "scripts": {
     "start": "nodemon project-management/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,5 +1,5 @@
 import httpClient from "../httpClient";
-import { BASE_URLS, Project, User } from "../utils";
+import { BASE_URLS, DataProps, Project, User } from "../utils";
 export const useHttpClient = () => {
 
     const options = {
@@ -24,6 +24,9 @@ export const useHttpClient = () => {
         },
         fetchProjects: () => {
             return httpClient.get(`${BASE_URLS.EXPRESS_URL}/projects`, headers)
+        },
+        fetchProjectById: (projectId: number | undefined) => {
+            return httpClient.get(`${BASE_URLS.EXPRESS_URL}/project/${projectId}`, headers)
         },
         acceptProject: (projectId: number | undefined) => {
             const body = {
@@ -63,6 +66,9 @@ export const useHttpClient = () => {
         },
         likeProject: (projectId: number | undefined) => {
             return httpClient.patch(`${BASE_URLS.EXPRESS_URL}/project/${projectId}`, null, headers)
+        },
+        commentProject: (projectId: number | undefined, comment: DataProps[] | []) => {
+            return httpClient.put(`${BASE_URLS.EXPRESS_URL}/project/comment/${projectId}`, comment, headers)
         }
     };
 };

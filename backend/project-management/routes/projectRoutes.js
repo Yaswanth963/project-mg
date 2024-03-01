@@ -109,4 +109,19 @@ router.patch('/project/:projectId', verifyToken, async (req, res) => {
   }
 });
 
+// PATCH route to update project likes
+router.put('/project/comment/:projectId', verifyToken, async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const data = req.body;
+    // Update the status of the project
+    const updatedProject = await projectService.addComment(projectId, data);
+
+    return res.status(200).json({ message: 'Liked updated successfully', project: updatedProject });
+  } catch (error) {
+    console.error('Error liking project:', error);
+    return res.status(500).json({ error: 'Error liking project' });
+  }
+});
+
 module.exports = router;

@@ -32,7 +32,7 @@ async function updateProject(projectId, projectDetails) {
   try {
     const project = await Project.findByPk(projectId);
     if (!project) {
-      throw new Error('Project not found');
+      throw new Error("Project not found");
     }
     await project.update(projectDetails);
     return project;
@@ -45,7 +45,7 @@ async function deleteProject(projectId) {
   try {
     const project = await Project.findByPk(projectId);
     if (!project) {
-      throw new Error('Project not found');
+      throw new Error("Project not found");
     }
     await project.destroy();
     return project;
@@ -66,39 +66,56 @@ async function getProjects() {
 // Update project status by projectId
 async function updateStatus(projectId, status) {
   try {
-      const project = await Project.findByPk(projectId);
-      if (!project) {
-          throw new Error('Project not found');
-      }
+    const project = await Project.findByPk(projectId);
+    if (!project) {
+      throw new Error("Project not found");
+    }
 
-      // Update the status of the project
-      project.status = status;
-      await project.save();
+    // Update the status of the project
+    project.status = status;
+    await project.save();
 
-      return project;
+    return project;
   } catch (error) {
-      throw error;
+    throw error;
   }
 }
 
 // Update project likes by projectId
 async function updateLikes(projectId) {
   try {
-      const project = await Project.findByPk(projectId);
-      if (!project) {
-          throw new Error('Project not found');
-      }
+    const project = await Project.findByPk(projectId);
+    if (!project) {
+      throw new Error("Project not found");
+    }
 
-      // Update the status of the project
-      project.likes = project.likes + 1;
-      await project.save();
+    // Update the status of the project
+    project.likes = project.likes + 1;
+    await project.save();
 
-      return project;
+    return project;
   } catch (error) {
-      throw error;
+    throw error;
   }
 }
 
+// Update project comments by projectId
+async function addComment(projectId, data) {
+  try {
+    const project = await Project.findByPk(projectId);
+    if (!project) {
+      throw new Error("Project not found");
+    }
+
+    // Update the project comments
+    project.comments = data;
+    await project.save();
+
+    return project;
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createProject,
@@ -107,5 +124,7 @@ module.exports = {
   deleteProject,
   getProjectsByUserId,
   getProjects,
-  updateStatus
+  updateStatus,
+  updateLikes,
+  addComment,
 };
