@@ -38,3 +38,73 @@
 .replyIcon{
   visibility: hidden;
 }
+
+
+.about-container {
+  position: relative;
+  overflow: hidden;
+  padding: "20px 0px";
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/work.jpeg'); 
+  background-size: cover;
+  filter: brightness(0.5); 
+}
+
+.college-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/albany.jpeg'); 
+  background-size: cover;
+  filter: brightness(0.5); 
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  color: #ffffff; 
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; 
+}
+
+.video {
+  width: 100%;
+  max-width: 900px;
+}
+
+.university-image {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: "20px 0px";
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 24px;
+  width: 10vw;
+  color: #FFFFFF; /* Adjust color as needed */
+}
