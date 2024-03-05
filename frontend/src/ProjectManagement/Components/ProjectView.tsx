@@ -20,7 +20,7 @@ const CommentsContainer = styled.div`
     overflow-y: auto;
 `
 
-export const ProjectView = ({ projectId, project, likeHandler, like, commentHandler }: ProjectProps) => {
+export const ProjectView = ({ projectId, likeHandler, like, commentHandler }: ProjectProps) => {
 
     const [showComments, setShowComments] = useState(false);
     const [tempProject, setTempProject] = useState<Project>();
@@ -44,7 +44,7 @@ export const ProjectView = ({ projectId, project, likeHandler, like, commentHand
         return filename?.split('.').pop()?.toLowerCase();
     };
 
-    const fileExtension = getFileExtension(project?.projectAssetUrl);
+    const fileExtension = getFileExtension(tempProject?.projectAssetUrl);
 
     const renderMedia = () => {
         if (!fileExtension) return null;
@@ -57,13 +57,13 @@ export const ProjectView = ({ projectId, project, likeHandler, like, commentHand
                     controls
                     style={{ borderRadius: '5px' }}
                 >
-                    <source src={project?.projectAssetUrl} type="video/mp4" />
+                    <source src={tempProject?.projectAssetUrl} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             );
         } else if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png') {
             return (
-                <Image src={project?.projectAssetUrl} height={200} width={200} style={{ borderRadius: '8px' }} />
+                <Image src={tempProject?.projectAssetUrl} height={200} width={200} style={{ borderRadius: '8px' }} />
             );
         } else {
             return null;
@@ -105,7 +105,7 @@ export const ProjectView = ({ projectId, project, likeHandler, like, commentHand
                     <Badge count={!like ? tempProject?.likes : (tempProject?.likes || 0) + 1} color='#0080F0'>
                         <Avatar shape="square" size="large" icon={<Like />} onClick={handleLike} />
                     </Badge>
-                    <Badge count={99} overflowCount={10} color='#0080F0'>
+                    <Badge count={tempProject?.comments?.length} color='#0080F0'>
                         <Avatar shape="square" size="large" icon={<Comment onClick={() => setShowComments(!showComments)} />} />
                     </Badge>
                 </div>

@@ -18,10 +18,7 @@ export const About = () => {
             </div>
 
             <div className="video-container">
-                <video className="video" controls>
-                    <source src="https://www.youtube.com/watch?v=2c8fFETvTvs" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+                <iframe className="video" width="560" height="315" src="https://www.youtube.com/embed/2c8fFETvTvs" ></iframe>
             </div>
 
             {/* University image */}

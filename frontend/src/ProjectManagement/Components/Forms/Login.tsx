@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHttpClient } from '../../hooks/useHttpClient';
 import planetImage from '../../assets/images/planet.jpeg'
+import { UserRole } from '../../utils';
 
 
 type FieldType = {
@@ -37,11 +38,14 @@ const Login: React.FC = () => {
                 localStorage.setItem("userId", req?.username);
                 localStorage.setItem("userRole", role?.role);
                 localStorage.setItem("username", role?.username);
-                if (role == 'USER') {
+                if (role?.role === UserRole.REVIEWER) {
+                    navigate("/reviewer")
+                }
+                else if (role?.role === UserRole.USER) {
                     navigate("/user")
                 }
                 else {
-                    navigate("/reviewer")
+                    navigate("/login")
                 }
             })
             .catch(res => {
