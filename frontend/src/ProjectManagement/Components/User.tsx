@@ -128,7 +128,7 @@ const Reviewer: React.FC = () => {
             navigate("/login");
             return;
         }
-        const userId = userData.userId;
+        const userId = localStorage.getItem("userId") || userData?.userId;
         fetchProjectsByUserId(userId)
             .then(res => {
                 const projects = res?.data;

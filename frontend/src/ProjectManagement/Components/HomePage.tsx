@@ -1,4 +1,4 @@
-import projectImage from '../assets/images/project.png'
+import projectImage from '../assets/images/project-logo.png'
 import likeImage from '../assets/svgs/like.svg'
 import commentImage from '../assets/svgs/comment.svg'
 import { Row, Col, Card, Typography, Modal, Image } from 'antd';
@@ -135,7 +135,7 @@ const HomePage: React.FC = () => {
                                     }}
                                 />
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
-                                    <Image src={projectImage} width={35} height={35} preview={false} style={{ borderRadius: '20px' }} />
+                                    <Image preview={false} src={projectImage} style={{ width: '40px', height: '40px', marginLeft: '15px', cursor: 'pointer' }} />
                                     <div style={{ display: 'flex' }}>
                                         <Typography style={{ marginRight: '10px', color: 'white' }}>
                                             <Image src={likeImage} width={30} height={30} preview={false} />

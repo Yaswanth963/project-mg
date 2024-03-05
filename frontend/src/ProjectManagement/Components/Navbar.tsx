@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { ReactComponent as ProjectIcon } from '../assets/svgs/project-logo.svg';
 import { Link, useNavigate } from "react-router-dom";
+import projectImage from '../assets/images/project-logo.png'
+import { Image } from "antd";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -41,7 +42,8 @@ export const NavBar = () => {
     const role = localStorage.getItem("userRole");
     return (
         <StyledDiv>
-            <ProjectIcon style={{ padding: '10px 30px', cursor: 'pointer' }} onClick={() => { navigate("/") }} />
+            {/* <ProjectIcon style={{ padding: '10px 30px', cursor: 'pointer' }} onClick={() => { navigate("/") }} /> */}
+            <Image preview={false} src={projectImage} style={{ width: '40px', height: '40px', marginLeft: '15px', cursor: 'pointer' }} onClick={() => { navigate("/") }} />
             <LinksContainer>
                 <LinkItem to="/home">Home</LinkItem>
                 <LinkItem to={role == 'REVIEWER' ? "/reviewer" : "user"}>Explore</LinkItem>
