@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Button, Input, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import styled from '@emotion/styled';
@@ -17,6 +17,7 @@ export const FileUpload: React.FC = () => {
     const [projectName, setProjectName] = useState<string>('');
     const [projectDescription, setProjectDescription] = useState<string>('');
     const [fileSize, setFileSize] = useState<number>(0);
+    const fileInputRef = useRef<any>(null);
 
     const { uploadFile, uploadProject, deleteFile } = useHttpClient();
     const { userData } = useContext(AuthContext);
@@ -37,6 +38,11 @@ export const FileUpload: React.FC = () => {
         setProjectDescription('');
         setFileSize(0);
         setUploading(false);
+
+        // Reset the file input value using the ref
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     }
 
     const handleUpload = async () => {
@@ -103,6 +109,7 @@ export const FileUpload: React.FC = () => {
                     accept=".mp4, .jpeg, .png, .jpg, .mov, .avi"
                     onChange={handleFileChange}
                     style={{ backgroundColor: 'transparent', color: 'white' }}
+                    ref={fileInputRef}
                 />
             </StyledDiv>
             <StyledDiv>
