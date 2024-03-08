@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
 import styled from '@emotion/styled';
 import { User } from '../../utils';
 import { useHttpClient } from '../../hooks/useHttpClient';
@@ -29,7 +29,7 @@ const ProfileUpdate: React.FC = () => {
         }
         updateUser(profile?.rollNo, req)
             .then(res => {
-                alert('User Data Updated Successfully');
+                message.info('User Data Updated Successfully');
                 localStorage.clear();
                 navigate("/");
             })

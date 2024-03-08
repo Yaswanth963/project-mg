@@ -106,5 +106,17 @@
   align-items: center;
   font-size: 24px;
   width: 10vw;
-  color: #FFFFFF; /* Adjust color as needed */
+  color: #FFFFFF; 
+}
+
+.ant-upload-list-item-container {
+  color: white; 
+}
+
+.anticon-paper-clip svg {
+  fill: white; 
+}
+
+.anticon-delete svg{
+  fill: white; 
 }

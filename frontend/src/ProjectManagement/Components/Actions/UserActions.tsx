@@ -18,7 +18,6 @@ export const UserActions = ({ viewHandler, deleteHandler, project }: UserActionP
             <svg width="25" height="25" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                 style={{ marginRight: 10, cursor: 'pointer' }} onClick={() => {
                     viewHandler(project);
-                    console.log('View Project')
                 }}
             >
                 <path d="M12.5 5C6.13636 5 2.5 12 2.5 12C2.5 12 6.13636 19 12.5 19C18.8636 19 22.5 12 22.5 12C22.5 12 18.8636 5 12.5 5Z" stroke="#777A83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -27,8 +26,7 @@ export const UserActions = ({ viewHandler, deleteHandler, project }: UserActionP
 
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                 style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => {
-                deleteHandler(project?.projectId);
-                console.log('Delete Project')
+                    deleteHandler(project?.projectId);
                 }}
             >
                 <g clip-path="url(#clip0_5_19)">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Table } from 'antd';
+import { Modal, Table, message } from 'antd';
 import type { TableProps } from 'antd';
 import { DataProps, Project, ProjectStatus } from '../utils';
 import moment from 'moment';
@@ -32,7 +32,7 @@ const Reviewer: React.FC = () => {
         acceptProject(projectId)
             .then(res => {
                 setReload(!reload);
-                alert(`Project ${projectId} accepted successfully`);
+                message.info(`Project ${projectId} accepted successfully`);
             })
             .catch(err => {
                 console.log('Failed to accept the project', projectId);
@@ -59,7 +59,7 @@ const Reviewer: React.FC = () => {
         rejectProject(projectId)
             .then(res => {
                 setReload(!reload);
-                alert(`Project ${projectId} rejected successfully`);
+                message.info(`Project ${projectId} rejected successfully`);
             })
             .catch(err => {
                 console.log('Failed to reject the project', projectId);

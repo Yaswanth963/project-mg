@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Button, Input, Typography } from 'antd';
+import { Button, Input, Typography, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import styled from '@emotion/styled';
 import { useHttpClient } from '../hooks/useHttpClient';
@@ -68,22 +68,22 @@ export const FileUpload: React.FC = () => {
                     resetFields();
                     uploadProject(project)
                         .then(res => {
-                            alert('Project Uploaded successfully');
+                            message.info('Project Uploaded successfully');
                         })
                         .catch(err => {
                             deleteFile(projectName)
                                 .then(res => {
                                     console.log('Deleted file from s3');
-                                    alert('Failed to upload project Deleted the uploaded file');
+                                    message.error('Failed to upload project Deleted the uploaded file');
                                 })
                                 .catch(err => {
-                                    alert('Failed to delete file');
+                                    message.error('Failed to delete file');
                                 })
                             console.log('Failed to upload project');
                         })
                 })
                 .catch(err => {
-                    alert('Upload failed');
+                    message.error('Upload failed');
                 })
 
         } catch (error) {

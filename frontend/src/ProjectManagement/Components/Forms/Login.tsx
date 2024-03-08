@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
 import styled from '@emotion/styled';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHttpClient } from '../../hooks/useHttpClient';
@@ -49,7 +49,7 @@ const Login: React.FC = () => {
                 }
             })
             .catch(res => {
-                alert('Incorrect username or password');
+                message.error('Incorrect username or password');
             })
     };
 

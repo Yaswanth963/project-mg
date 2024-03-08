@@ -53,6 +53,18 @@ router.put('/project/:projectId', verifyToken, async (req, res) => {
   }
 });
 
+// Update abstract
+router.put('/project/abstract/:projectId', verifyToken, async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const updatedProject = await projectService.updateAbstract(projectId, req.body);
+    res.json(updatedProject);
+  } catch (error) {
+    console.error('Error updating project:', error);
+    res.status(500).json({ error: 'Error updating project' });
+  }
+});
+
 // Delete project
 router.delete('/project/:projectId', verifyToken, async (req, res) => {
   try {

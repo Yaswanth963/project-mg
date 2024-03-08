@@ -29,6 +29,9 @@ const Project = sequelize.define("Projects", {
   submittedBy: {
     type: DataTypes.STRING,
   },
+  abstractUrl: {
+    type: DataTypes.STRING,
+  },
   status: {
     type: DataTypes.STRING,
     defaultValue: "PENDING",

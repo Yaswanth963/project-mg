@@ -41,6 +41,20 @@ async function updateProject(projectId, projectDetails) {
   }
 }
 
+async function updateAbstract(projectId, projectDetails) {
+  try {
+    const project = await Project.findByPk(projectId);
+    if (!project) {
+      throw new Error("Project not found");
+    }
+    project.abstractUrl = projectDetails.abstractUrl;
+    await project.save();
+    return project;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function deleteProject(projectId) {
   try {
     const project = await Project.findByPk(projectId);
@@ -127,4 +141,5 @@ module.exports = {
   updateStatus,
   updateLikes,
   addComment,
+  updateAbstract,
 };

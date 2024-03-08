@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Modal, Table } from 'antd';
+import { Modal, Table, message } from 'antd';
 import type { TableProps } from 'antd';
 import { DataProps, Project, ProjectStatus } from '../utils';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import { AuthContext } from '../Context/authContext';
 import { UserNavbar } from './UserNavbar';
 import '../styles/styles.css'
 import { useNavigate } from 'react-router-dom';
+import UploadFile from './Upload';
 const capitalize = require('capitalize');
 
 const StyledTable = styled.div`
@@ -25,6 +26,7 @@ const Reviewer: React.FC = () => {
     const [reload, setReload] = useState(false);
     const [like, setLike] = useState(false);
     const [view, setView] = useState(false);
+    const [abstractView, setAbstractView] = useState(false);
     const [projects, setprojects] = useState<Project[] | []>();
     const [activeProject, setActiveProject] = useState<Project>();
     const { userData } = useContext(AuthContext);
@@ -35,7 +37,7 @@ const Reviewer: React.FC = () => {
         deleteProject(projectId)
             .then(res => {
                 setReload(!reload);
-                alert(`Project ${projectId} deleted successfully`)
+                message.info(`Project ${projectId} deleted successfully`)
             })
             .catch(err => {
                 console.log('Failed to delete project')
@@ -107,6 +109,13 @@ const Reviewer: React.FC = () => {
                 return <UserActions deleteHandler={(projectId) => deleteHandler(projectId)} viewHandler={viewHandler} project={project} />
             }
         },
+        {
+            title: 'Abstract',
+            dataIndex: 'uploadAbstract',
+            key: 'uploadAbstract',
+            ellipsis: true,
+            render: (_, project: Project) => <a style={{ color: '#777A83', textDecorationLine: 'underline' }} onClick={() => { setAbstractView(true) }}>Upload Abstract</a>,
+        },
     ];
 
 
@@ -121,6 +130,10 @@ const Reviewer: React.FC = () => {
                 })
         }
         setView(false);
+    }
+
+    const handleAbstract = () => {
+        setAbstractView(false);
     }
 
     useEffect(() => {
@@ -164,6 +177,16 @@ const Reviewer: React.FC = () => {
                     commentHandler={(comment: DataProps[]) => commentHandler(comment)}
                     like={like}
                     likeHandler={likeHandler} />
+            </Modal>
+            <Modal
+                title=""
+                open={abstractView}
+                onCancel={handleAbstract}
+                footer={false}
+                style={{ maxHeight: '50vh', color: '#FFFFFF' }}
+                width={500}
+            >
+                <UploadFile projectId={activeProject?.projectId} />
             </Modal>
         </StyledTable>
     )
