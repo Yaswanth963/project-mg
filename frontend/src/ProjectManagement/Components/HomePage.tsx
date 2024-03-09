@@ -4,7 +4,7 @@ import commentImage from '../assets/svgs/comment.svg'
 import { Row, Col, Card, Typography, Modal, Image } from 'antd';
 import { useHttpClient } from '../hooks/useHttpClient';
 import { useEffect, useState } from 'react';
-import { DataProps, Project } from '../utils';
+import { DataProps, Project, ProjectStatus } from '../utils';
 import { ProjectView } from './ProjectView';
 import { UserNavbar } from './UserNavbar';
 import styled from '@emotion/styled';
@@ -83,7 +83,7 @@ const HomePage: React.FC = () => {
                 <UserNavbar />
                 <div style={{ overflowX: 'hidden', paddingTop: '40px' }}>
                 <Row gutter={[16, 16]}>
-                    {projects?.map((project: Project, index) => (
+                        {projects?.filter((project: Project) => project.status === ProjectStatus.APPROVED).map((project: Project, index) => (
                         <Col span={6} xs={20} sm={12} md={8} lg={5} xl={6} onClick={() => setActiveProject(project)} key={index}>
                             <Card
                                 hoverable

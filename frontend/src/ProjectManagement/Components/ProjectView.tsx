@@ -24,7 +24,7 @@ export const ProjectView = ({ projectId, likeHandler, like, commentHandler }: Pr
 
     const [showComments, setShowComments] = useState(false);
     const [tempProject, setTempProject] = useState<Project>();
-    const { fetchProjectById } = useHttpClient();
+    const { fetchProjectById, downloadFile } = useHttpClient();
 
     useEffect(() => {
         fetchProjectById(projectId)
@@ -88,6 +88,9 @@ export const ProjectView = ({ projectId, likeHandler, like, commentHandler }: Pr
                     <Typography.Title style={{ color: '#FFFFFF' }}>
                         {tempProject?.projectName}
                     </Typography.Title>
+                    <a href={tempProject?.abstractUrl}>
+                        Download Abstract File
+                    </a>
                     <Typography.Paragraph style={{ color: 'rgb(183,183,184)', maxWidth: '600px' }}>
                         {tempProject?.projectDescription}
                     </Typography.Paragraph>

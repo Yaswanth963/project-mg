@@ -49,11 +49,11 @@ export const useHttpClient = () => {
         uploadFile: (file: FormData) => {
             return httpClient.post(`${BASE_URLS.EXPRESS_URL}/file/upload`, file, options)
         },
-        uploadAbstract: (projectId: number | undefined, abstractUrl: string) => {
-            return httpClient.patch(`${BASE_URLS.EXPRESS_URL}/project/abstract/${projectId}`, abstractUrl, options)
-        },
         deleteFile: (fileName: string) => {
             return httpClient.delete(`${BASE_URLS.EXPRESS_URL}/file/delete/${fileName}`, headers)
+        },
+        downloadFile: (fileName?: string) => {
+            return httpClient.get(`${BASE_URLS.EXPRESS_URL}/file/download/${fileName}`, headers)
         },
         login: (req: any) => {
             return httpClient.post(`${BASE_URLS.EXPRESS_URL}/login`, req, headers);

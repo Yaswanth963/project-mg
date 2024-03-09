@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Dropdown, Image, MenuProps, Modal } from "antd";
-import { FileUpload } from "./FileUpload";
 import projectImage from '../assets/images/project-logo.png'
+import { ProjectUpload } from "./ProjectUpload";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -66,9 +66,9 @@ export const UserNavbar = () => {
                 onCancel={() => {
                     setshowUpload(false);
                 }}
-                width={800}
+                width={700}
             >
-                <FileUpload />
+                <ProjectUpload />
             </Modal>
         </StyledDiv>
     );

@@ -20,9 +20,6 @@ const Project = sequelize.define("Projects", {
   projectAssetUrl: {
     type: DataTypes.STRING,
   },
-  projectAssetSize: {
-    type: DataTypes.INTEGER,
-  },
   dateOfSubmission: {
     type: DataTypes.STRING,
   },

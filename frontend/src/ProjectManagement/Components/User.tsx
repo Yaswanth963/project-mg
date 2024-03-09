@@ -11,7 +11,7 @@ import { AuthContext } from '../Context/authContext';
 import { UserNavbar } from './UserNavbar';
 import '../styles/styles.css'
 import { useNavigate } from 'react-router-dom';
-import UploadFile from './Upload';
+import { ProjectUpload } from './ProjectUpload';
 const capitalize = require('capitalize');
 
 const StyledTable = styled.div`
@@ -109,15 +109,7 @@ const Reviewer: React.FC = () => {
                 return <UserActions deleteHandler={(projectId) => deleteHandler(projectId)} viewHandler={viewHandler} project={project} />
             }
         },
-        {
-            title: 'Abstract',
-            dataIndex: 'uploadAbstract',
-            key: 'uploadAbstract',
-            ellipsis: true,
-            render: (_, project: Project) => <a style={{ color: '#777A83', textDecorationLine: 'underline' }} onClick={() => { setAbstractView(true) }}>Upload Abstract</a>,
-        },
     ];
-
 
     const handleCancel = () => {
         if (like) {
@@ -186,7 +178,7 @@ const Reviewer: React.FC = () => {
                 style={{ maxHeight: '50vh', color: '#FFFFFF' }}
                 width={500}
             >
-                <UploadFile projectId={activeProject?.projectId} />
+                <ProjectUpload />
             </Modal>
         </StyledTable>
     )

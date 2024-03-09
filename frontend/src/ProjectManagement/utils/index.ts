@@ -3,7 +3,7 @@ export interface Project {
   projectName: string;
   projectDescription: string;
   projectAssetUrl: string;
-  projectAssetSize: number;
+  abstractUrl: string;
   dateOfSubmission: string;
   submittedBy: string;
   status?: string;

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require("uuid");
 
 // Initialize AWS SDK
 aws.config.update({
@@ -14,9 +15,9 @@ const s3 = new aws.S3();
 const uploadFile = async (file) => {
     try {
         const params = {
-            Bucket: BUCKET_NAME,
-            Key: file.originalname,
-            Body: file.buffer
+          Bucket: BUCKET_NAME,
+          Key: file.originalname,
+          Body: file.buffer,
         };
         const result = await s3.upload(params).promise();
         return result.Location;
